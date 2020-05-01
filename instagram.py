@@ -4,58 +4,91 @@ from time import sleep
 
 i = 0
 
+user = str(input("Digite o seu usuário do Instagram: "))
+
+password = str(input("Digite a sua senha do Instagram: "))
+
+perfil = str(input("Digite o perfil que você deseja visitar: @"))
+
 browser = webdriver.Firefox()
-
-browser.get('https://www.instagram.com/artneversleeps/')
-
-browser.maximize_window()
-
-browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 
 try:
 
-	botao = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/div[3]/div[1]/div/button/div/div")
+	browser.get('https://www.instagram.com/'+perfil+'/')
 
-	botao.click()
+	browser.maximize_window()
 
-except:
- 	
- 	""
+	login = browser.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[3]/div/span/a[1]/button")
 
+	login.click()
 
-while i < 4:
+	sleep(5)
+
+	usuario = browser.find_element_by_name("username")
+	usuario.send_keys(user)
+
+	senha = browser.find_element_by_name("password")
+	senha.send_keys(password)
+	senha.send_keys(Keys.RETURN)
+
+	sleep(8)
+
+	publicacoes = browser.find_element_by_class_name("g47SY")
+
+	p = int(publicacoes.text)
+
+	print("O Perfil tem : " + publicacoes.text + " publicações")
+
+	foto = browser.find_element_by_xpath("/html/body/div/section/main/div/div/article/div/div/div/div")
+
+	foto.click()
+
+	sleep(5)
+
+	curtidas = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[2]/section[2]/div/div[2]/button/span")
+
+	print(curtidas.text)
+
+	proximo = browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a")
+
+	proximo.click()
+
+	sleep(4)
+
+	while i < p:
+
+		try:
+
+			curtidas = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[2]/section[2]/div/div[2]/button/span")
+
+			print(curtidas.text)
+
+			proximo = browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]")
+
+			i = i + 1
+
+			proximo.click()
+
+			sleep(4)
+
+		except:
+
+			print("Não foi possível saber o número de curtidas")
+
+			i = i + 1
+
+			proximo = browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]")
+
+			proximo.click()
+
+			sleep(4)
 	
-		browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+except:
 
-		sleep(2.3)
+	print("Ocorreu algum erro!")
 
-		i = i + 1
+	print("1- Verfique se o usuário e senha digitados estão corretos")
 
-i = 0
+	print("2- O perfil digitado pode estar incorreto")
 
-usuario = browser.find_element_by_name("username")
-usuario.send_keys("lucianodolenc")
-
-senha = browser.find_element_by_name("password")
-senha.send_keys("?????")
-senha.send_keys(Keys.RETURN)
-
-sleep(5)
-
-publicacoes = browser.find_element_by_class_name("g47SY")
-
-p = int(publicacoes.text)
-
-while i < p/11:
-
-	browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-
-	sleep(2.3)
-
-	i = i + 1
-
-print("O Perfil tem : " + publicacoes.text + " publicações")
-
-#foto = len(browser.find_elements_by_xpath("/html/body/div/section/main/div/div/article/div/div/div/div/a"))
-
-#print(foto)
+	print("3- O perfil digitado pode ser privado")
