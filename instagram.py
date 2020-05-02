@@ -47,7 +47,9 @@ try:
 
 	curtidas = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[2]/section[2]/div/div[2]/button/span")
 
-	print(curtidas.text)
+	data = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[2]/div[2]/a/time")
+
+	print("A FOTO FOI POSTADA: " + data.text + "    QUANTIDADE DE CURTIDAS: " + curtidas.text)
 
 	proximo = browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a")
 
@@ -60,10 +62,11 @@ try:
 		try:
 
 			curtidas = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[2]/section[2]/div/div[2]/button/span")
-
-			print(curtidas.text)
-
 			proximo = browser.find_element_by_xpath("/html/body/div[4]/div[1]/div/div/a[2]")
+
+			data = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[2]/div[2]/a/time")
+
+			print("A FOTO FOI POSTADA: " + data.text + "    QUANTIDADE DE CURTIDAS: " + curtidas.text)
 
 			i = i + 1
 
@@ -73,7 +76,9 @@ try:
 
 		except:
 
-			print("Não foi possível saber o número de curtidas")
+			data = browser.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[2]/div[2]/a/time")
+
+			print("A FOTO FOI POSTADA: " + data.text + "      A POSTAGEM É UM VÍDEO, NÃO É POSSÍVEL MOSTRAR AS CURTIDAS")
 
 			i = i + 1
 
